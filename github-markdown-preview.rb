@@ -4,11 +4,12 @@ require 'github/markdown'
 
 file_name = ARGV.at(0)
 
-# paths to the github css files; needed to get an accurate preview of the formatting on github.
-# NOTE: these links break when github updates their css.  This is good... that's how we know it's time to
-# grab a fresh link to keep out previews accurate
-github_css_1 = "https://a248.e.akamai.net/assets.github.com/stylesheets/bundles/github-c1b259ab57c9cca1c697baded9ecd8278b4026f9.css"
-github_css_2 = "https://a248.e.akamai.net/assets.github.com/stylesheets/bundles/github2-9a6987061a89bac7e001fbfac3a4a9e99aeb9436.css"
+# get paths to our local copies of the Github CSS
+# NOTE: these files will probably get stale and should be refreshed from github periodically
+#     (we can't point to a static github path because they append a version number within their filename)
+script_dir = File.expand_path(File.dirname(__FILE__))
+github_css_1 = "file://" + script_dir + "/css/github.css"
+github_css_2 = "file://" + script_dir + "/css/github2.css"
 
 
 def update_preview(file_name, css_1, css_2)
