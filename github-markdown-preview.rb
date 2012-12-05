@@ -13,18 +13,26 @@ github_css_2 = "file://" + script_dir + "/css/github2.css"
 
 
 def update_preview(file_name, css_1, css_2)
+  markdown_render = GitHub::Markdown.render(File.new(file_name).read)
+
+  output_file_content =<<CONTENT
+
+<body class="markdown-body" style="padding:20px">
+  <link rel=stylesheet type=text/css href="#{css_1}">
+  <link rel=stylesheet type=text/css href="#{css_2}">
+  <div id="slider">
+    <div class="frames">
+      <div class="frame frame-center">
+        #{markdown_render}
+      </div>
+    </div>
+  </div>
+</body>
+
+CONTENT
+
   out_file = File.open('/tmp/markdownPreview.html', 'w')
-  out_file.write('<body class="markdown-body" style="padding:20px">')
-  out_file.write('<div id="slider">')
-  out_file.write('<div class="frames">')
-  out_file.write('<div class="frame frame-center">')
-  out_file.write('<link rel=stylesheet type=text/css href="' + css_1 + '">')
-  out_file.write('<link rel=stylesheet type=text/css href="' + css_2 + '">')
-  out_file.write(GitHub::Markdown.render(File.new(file_name).read))
-  out_file.write('</div>')
-  out_file.write('</div>')
-  out_file.write('</div>')
-  out_file.write('</body>')
+  out_file.write(output_file_content)
   out_file.close
 end
 
@@ -32,7 +40,7 @@ end
 update_preview(file_name, github_css_1, github_css_2)
 
 # then listen for changes and refresh it when needed
-Listen.to(Dir.pwd, :relative_paths => true) do |modified, added, removed|
+Listen.to(Dir.pwd, :relative_paths => true) do |modified|
   if modified.inspect.include?(file_name)
     update_preview(file_name, github_css_1, github_css_2)
   end
