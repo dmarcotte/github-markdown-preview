@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'listen'
-require 'github/markdown'
+require 'html/pipeline'
 
 file_name = ARGV.at(0)
 
@@ -11,9 +11,17 @@ script_dir = File.expand_path(File.dirname(__FILE__))
 github_css_1 = "file://" + script_dir + "/css/github.css"
 github_css_2 = "file://" + script_dir + "/css/github2.css"
 
-
 def update_preview(file_name, css_1, css_2)
-  markdown_render = GitHub::Markdown.render(File.new(file_name).read)
+
+  pipeline = HTML::Pipeline.new [
+    HTML::Pipeline::MarkdownFilter,
+    HTML::Pipeline::MentionFilter,
+    #HTML::Pipeline::EmojiFilter,  todo results in "/Library/Ruby/Gems/1.8/gems/html-pipeline-0.0.4/lib/html/pipeline/emoji_filter.rb:44:in `asset_root': Missing context :asset_root (ArgumentError)"
+    HTML::Pipeline::SanitizationFilter,
+    HTML::Pipeline::SyntaxHighlightFilter # todo order seems to matter: this guy gets cancelled out if he's not last
+  ]
+
+  markdown_render = pipeline.call(File.new(file_name).read)[:output].to_s
 
   output_file_content =<<CONTENT
 
@@ -40,7 +48,7 @@ end
 update_preview(file_name, github_css_1, github_css_2)
 
 # then listen for changes and refresh it when needed
-Listen.to(Dir.pwd, :relative_paths => true) do |modified|
+Listen.to(Dir.pwd, :relative_paths => true) do |modified, _, _|
   if modified.inspect.include?(file_name)
     update_preview(file_name, github_css_1, github_css_2)
   end
