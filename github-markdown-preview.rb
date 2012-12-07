@@ -1,3 +1,5 @@
+#!/usr/bin/ruby
+
 require 'rubygems'
 require 'listen'
 require 'html/pipeline'
@@ -13,19 +15,27 @@ github_css_2 = "file://" + script_dir + "/css/github2.css"
 
 def update_preview(file_name, css_1, css_2)
 
+  context = {
+      :asset_root => "https://a248.e.akamai.net/assets.github.com/images/icons/",
+      :gfm => true
+  }
+
   pipeline = HTML::Pipeline.new [
-    HTML::Pipeline::MarkdownFilter,
-    HTML::Pipeline::MentionFilter,
-    #HTML::Pipeline::EmojiFilter,  todo results in "/Library/Ruby/Gems/1.8/gems/html-pipeline-0.0.4/lib/html/pipeline/emoji_filter.rb:44:in `asset_root': Missing context :asset_root (ArgumentError)"
-    HTML::Pipeline::SanitizationFilter,
-    HTML::Pipeline::SyntaxHighlightFilter # todo order seems to matter: this guy gets cancelled out if he's not last
+      HTML::Pipeline::MarkdownFilter,
+      HTML::Pipeline::SanitizationFilter,
+      HTML::Pipeline::CamoFilter,
+      HTML::Pipeline::ImageMaxWidthFilter,
+      HTML::Pipeline::HttpsFilter,
+      HTML::Pipeline::MentionFilter,
+      HTML::Pipeline::EmojiFilter,
+      HTML::Pipeline::SyntaxHighlightFilter
   ]
 
-  markdown_render = pipeline.call(File.new(file_name).read)[:output].to_s
+  markdown_render = pipeline.call(File.new(file_name).read, context, {})[:output].to_s
 
   output_file_content =<<CONTENT
 
-<body class="markdown-body" style="padding:20px">
+<body class="markdown-body" style="padding:20px; overflow-y: scroll">
   <link rel=stylesheet type=text/css href="#{css_1}">
   <link rel=stylesheet type=text/css href="#{css_2}">
   <div id="slider">
@@ -47,7 +57,7 @@ end
 # generate the preview on load...
 update_preview(file_name, github_css_1, github_css_2)
 
-# then listen for changes and refresh it when needed
+# ...then listen for changes and refresh it needed
 Listen.to(Dir.pwd, :relative_paths => true) do |modified, _, _|
   if modified.inspect.include?(file_name)
     update_preview(file_name, github_css_1, github_css_2)
