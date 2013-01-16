@@ -10,7 +10,8 @@ watched_file_dir = File.dirname(watched_file)
 # get paths to our local copies of the Github CSS
 # NOTE: these files will probably get stale and should be refreshed from github periodically
 #     (we can't point to a static github path because they append a version number within their filename)
-script_dir = File.expand_path(File.dirname(__FILE__))
+script_location = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
+script_dir = File.expand_path(File.dirname(script_location))
 github_css_1 = "file://" + script_dir + "/css/github.css"
 github_css_2 = "file://" + script_dir + "/css/github2.css"
 
