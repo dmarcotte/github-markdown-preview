@@ -24,4 +24,6 @@ github-markdown-preview.rb <path/to/github-flavored/.md/file>
 
 ## Contributing
 
-In its current state, this script is meeting my needs so I probably won't be beefing it up much.  I acknowledge that it's pretty low-fi though, so if you've got desires to make it more slick, send a [pull](https://github.com/dmarcotte/github-markdown-preview/pulls)!
+If the script isn't working as promised, please [file an issue](https://github.com/dmarcotte/github-markdown-preview/issues)!
+
+As for new features, in its current state, this script is meeting my needs so I probably won't be beefing it up much.  I acknowledge that it's pretty low-fi though, so if you've got desires to make it more slick, send a [pull](https://github.com/dmarcotte/github-markdown-preview/pulls)!
