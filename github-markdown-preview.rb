@@ -23,7 +23,6 @@ def update_preview(file_name, css_1, css_2)
   pipeline = HTML::Pipeline.new [
       HTML::Pipeline::MarkdownFilter,
       HTML::Pipeline::SanitizationFilter,
-      HTML::Pipeline::CamoFilter,
       HTML::Pipeline::ImageMaxWidthFilter,
       HTML::Pipeline::HttpsFilter,
       HTML::Pipeline::MentionFilter,
