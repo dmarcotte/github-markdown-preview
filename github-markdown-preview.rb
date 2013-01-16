@@ -4,7 +4,8 @@ require 'rubygems'
 require 'listen'
 require 'html/pipeline'
 
-file_name = ARGV.at(0)
+watched_file = File.expand_path(ARGV.at(0))
+watched_file_dir = File.dirname(watched_file)
 
 # get paths to our local copies of the Github CSS
 # NOTE: these files will probably get stale and should be refreshed from github periodically
@@ -54,11 +55,17 @@ CONTENT
 end
 
 # generate the preview on load...
-update_preview(file_name, github_css_1, github_css_2)
+update_preview(watched_file, github_css_1, github_css_2)
 
-# ...then listen for changes and refresh it needed
-Listen.to(Dir.pwd, :relative_paths => true) do |modified, _, _|
-  if modified.inspect.include?(file_name)
-    update_preview(file_name, github_css_1, github_css_2)
+callback = Proc.new do |modified, added, removed|
+  if modified.inspect.include?(watched_file)
+    update_preview(watched_file, github_css_1, github_css_2)
   end
 end
+
+# ...then wait and listen for changes and refresh it needed
+listener = Listen.to(watched_file_dir)
+listener.change(&callback)
+listener.latency(0.1)
+listener.ignore(/.*\/.*/) # ignore all subdirectories
+listener.start
