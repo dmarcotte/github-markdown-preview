@@ -4,6 +4,8 @@ Use your favorite editor plus the usual edit/refresh cycle to quickly write and 
 
 This simple script marries [html-pipeline](https://github.com/jch/html-pipeline) with the [Listen file watcher](https://github.com/guard/listen) to provide a high-fidelity preview of Github Flavored Markdown in your local browser which automatically updates on edit.
 
+![sample screenshot](https://raw.github.com/dmarcotte/github-markdown-preview/5550878814c72bfcb02a033b4ca4ec9c8feb3216/screenshot.png "Local Github Markdown Preview output")
+
 ## Installing
 * Grab the dependencies:
 
