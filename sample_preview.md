@@ -4,9 +4,9 @@ Uses github css to preview not only structure and content, but also _look_ and *
 
 Emoji support: :rocket:
 
-Username rendering: @dmarcotte
+Relative links: [readme.md](readme.md)
 
-Syntax highlighting example courtesy of http://stackoverflow.com/a/705754:
+Syntax highlighting example courtesy of http://stackoverflow.com/a/705754
 ```ruby
 class HelloWorld
    def initialize(name)
