@@ -33,7 +33,6 @@ def update_preview(file_name, preview_file, css_1, css_2)
       HTML::Pipeline::SanitizationFilter,
       HTML::Pipeline::ImageMaxWidthFilter,
       HTML::Pipeline::HttpsFilter,
-      HTML::Pipeline::MentionFilter,
       HTML::Pipeline::EmojiFilter,
       HTML::Pipeline::SyntaxHighlightFilter
   ]
