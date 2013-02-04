@@ -4,7 +4,7 @@ Use your favorite editor plus the usual edit/refresh cycle to quickly write and 
 
 This simple script marries [html-pipeline](https://github.com/jch/html-pipeline) with the [Listen file watcher](https://github.com/guard/listen) to provide a high-fidelity preview of Github Flavored Markdown in your local browser which automatically updates on edit.
 
-![sample screenshot](https://raw.github.com/dmarcotte/github-markdown-preview/5550878814c72bfcb02a033b4ca4ec9c8feb3216/screenshot.png "Local Github Markdown Preview output")
+![sample screenshot](screenshot.png "Local Github Markdown Preview output")
 
 ## Installing
 * Grab the dependencies:
@@ -14,14 +14,17 @@ This simple script marries [html-pipeline](https://github.com/jch/html-pipeline)
     gem install listen
     ```
 * Clone this repository, add the directory to your `PATH`
-* `git pull` for updates
+* `git pull --tags` for updates
+* `git checkout v1.1` to pin to the latest version
 
 ## Usage
 ```bash
-# This will write the html preview to /tmp/markdownPreview.html.  Open in your favorite browser and enjoy!
-github-markdown-preview.rb <path/to/github-flavored/.md/file>
+# This will write the html preview along side your markdown file (<path/to/github-flavored/file.md.html>)
+# Open in your favorite browser and enjoy!
+github-markdown-preview.rb <path/to/github-flavored/file.md>
 ```
-* You can preview as many files as you like simultaneously.  The contents of `/tmp/markdownPreview.html` will be determined by the last edited file
+* The `.html` preview is written beside your `.md` file so that you can validate [relative links](https://github.com/blog/1395-relative-links-in-markup-files) locally
+* The `.html` preview is deleted when the script exits
 * I set up a "External Tool" in my IDE which launches `github-markdown-preview` for the active file.  Your favorite IDE/Text-editor should have a similar mechanism
 
 ## Contributing
