@@ -4,6 +4,11 @@ require 'rubygems'
 require 'listen'
 require 'html/pipeline'
 
+unless ARGV.count == 1
+  puts "Please supply the name of a markdown file as the first agument."
+  exit 1
+end
+
 watched_file = File.expand_path(ARGV.at(0))
 watched_file_dir = File.dirname(watched_file)
 preview_file = watched_file + '.html'
