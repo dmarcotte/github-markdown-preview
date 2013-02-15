@@ -10,8 +10,8 @@ This simple script marries [html-pipeline](https://github.com/jch/html-pipeline)
 * Grab the dependencies:
 
     ```bash
-    gem install html-pipeline
-    gem install listen
+    gem install rb-inotify --version '~> 0.8.8'
+    gem install html-pipeline listen github-linguist
     ```
 * Clone this repository, add the directory to your `PATH`
 * `git pull --tags` for updates
