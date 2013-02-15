@@ -15,7 +15,7 @@ This simple script marries [html-pipeline](https://github.com/jch/html-pipeline)
     ```
 * Clone this repository, add the directory to your `PATH`
 * `git pull --tags` for updates
-* `git checkout v1.1` to pin to the latest version
+* `git checkout v1.2` to pin to the latest version
 
 ## Usage
 ```bash
