@@ -67,6 +67,7 @@ end
 
 # generate the preview on load...
 update_preview(watched_file, preview_file, github_css_1, github_css_2)
+puts "Preview viewable at file://#{preview_file}"
 
 callback = Proc.new do |modified, added, removed|
   if modified.inspect.include?(watched_file)
