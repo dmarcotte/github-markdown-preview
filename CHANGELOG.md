@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.3
+* fix scroll issue which was causing page position to be lost on refresh
+* update github css
+
 ## v1.2
 * output help text on incorrect arguments
 * output location of preview file for easy viewing
