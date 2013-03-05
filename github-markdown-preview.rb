@@ -46,9 +46,16 @@ def update_preview(file_name, preview_file, css_1, css_2)
 
   output_file_content =<<CONTENT
 
-<body class="markdown-body" style="padding:20px; overflow-y: scroll">
+<head>
   <link rel=stylesheet type=text/css href="#{css_1}">
   <link rel=stylesheet type=text/css href="#{css_2}">
+  <style>
+    html, .markdown-body {
+      overflow: inherit;
+    }
+  </style>
+</head>
+<body class="markdown-body" style="padding:20px;">
   <div id="slider">
     <div class="frames">
       <div class="frame frame-center">
