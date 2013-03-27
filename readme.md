@@ -13,8 +13,9 @@ This simple script marries [html-pipeline](https://github.com/jch/html-pipeline)
     gem install rb-inotify --version '~> 0.8.8'
     gem install html-pipeline listen github-linguist
     ```
+* You might get an error when attempting to install the above extensions. Don't panic: just follow the helpful instructions (e.g., `icu required (brew install icu4c or apt-get install libicu-dev)`).
 * Clone this repository, add the directory to your `PATH`
-* `git pull --tags` for updates
+* `git fetch --tags` for updates
 * `git checkout v1.3` to pin to the latest version
 
 ## Usage
