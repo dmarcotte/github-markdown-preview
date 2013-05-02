@@ -9,9 +9,10 @@ unless ARGV.count == 1
   exit 1
 end
 
-watched_file = File.expand_path(ARGV.at(0))
-watched_file_dir = File.dirname(watched_file)
-preview_file = watched_file + '.html'
+watch_file = File.basename(ARGV.at(0))
+watch_file_abs_path = File.expand_path(ARGV.at(0))
+watched_file_dir = File.dirname(watch_file_abs_path)
+preview_file = watch_file_abs_path + '.html'
 
 # delete preview html on exit
 trap("EXIT") {
@@ -49,7 +50,7 @@ def update_preview(file_name, preview_file, css_1, css_2)
 <head>
   <link rel=stylesheet type=text/css href="#{css_1}">
   <link rel=stylesheet type=text/css href="#{css_2}">
-  <style>
+  <style type="text/css">
     html, .markdown-body {
       overflow: inherit;
     }
@@ -73,14 +74,16 @@ CONTENT
 end
 
 # generate the preview on load...
-update_preview(watched_file, preview_file, github_css_1, github_css_2)
+update_preview(watch_file_abs_path, preview_file, github_css_1, github_css_2)
 if $stdout.isatty
   puts "Preview viewable at file://#{preview_file}"
 end
 
 callback = Proc.new do |modified, added, removed|
-  if modified.inspect.include?(watched_file)
-    update_preview(watched_file, preview_file, github_css_1, github_css_2)
+  puts 'watch_file:' + watch_file
+  puts 'modified.inspect:' + modified.inspect
+  if modified.inspect.include?(watch_file)
+    update_preview(watch_file_abs_path, preview_file, github_css_1, github_css_2)
   end
 end
 
@@ -89,4 +92,4 @@ listener = Listen.to(watched_file_dir)
 listener.change(&callback)
 listener.latency(0.1)
 listener.ignore(/.*\/.*/) # ignore all subdirectories
-listener.start
+listener.start!

@@ -10,8 +10,9 @@ This simple script marries [html-pipeline](https://github.com/jch/html-pipeline)
 * Grab the dependencies:
 
     ```bash
+    gem install listen --version '~> 1.0.3'
     gem install rb-inotify --version '~> 0.8.8'
-    gem install html-pipeline listen github-linguist
+    gem install html-pipeline github-linguist
     ```
 * You might get an error when attempting to install the above extensions. Don't panic: just follow the helpful instructions (e.g., `icu required (brew install icu4c or apt-get install libicu-dev)`).
 * Clone this repository, add the directory to your `PATH`
