@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.4
+* fix compatability with Listen 1.0+
+
 ## v1.3
 * fix scroll issue which was causing page position to be lost on refresh
 * update github css
