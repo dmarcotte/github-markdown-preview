@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.5.0
+* structure the app for gem deployment and add Bundler utilities
+* move the main code into the GithubMarkdownPreview::HtmlPreview
+class to allow other programs to include a preview
+* add comprehensive tests
+* improve the scripts output (especially in error cases)
+* update to latest github css
+
 ## v1.4
 * fix compatability with Listen 1.0+
 

@@ -1,4 +1,4 @@
-# Sample Local Github Markdown Preview render
+# Sample Preview Render
 
 Uses github css to preview not only structure and content, but also _look_ and **feel** (awkward bolding and italics for demonstration purposes)
 
