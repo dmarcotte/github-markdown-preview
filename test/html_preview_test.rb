@@ -24,7 +24,7 @@ class TestHtmlPreview < Minitest::Unit::TestCase
   # Requires you pass a block which returns true when your asynchronous process has finished
   def wait_for_async_operation
     start_time = Time.now
-    wait_limit = 5
+    wait_limit = 30
     polling_interval = 0.1
 
     until yield
