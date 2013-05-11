@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Daniel Marcotte']
   s.email       = 'dmarcotte@gmail.com'
   s.homepage    = 'https://github.com/dmarcotte/github-markdown-preview'
-  s.summary     = %q{Local previews for Github Flavored Markdown files}
-  s.description = %q{Use your favorite editor plus the usual edit/refresh cycle to quickly write and polish your Github markdown files.}
+  s.summary     = %q{Use your favorite editor plus the usual edit/refresh cycle to quickly write and polish your Github markdown files.}
+  s.description = %q{Local previews for Github Flavored Markdown files}
   s.license     = 'MIT'
 
   s.add_dependency 'listen', '~> 1.0.3'
