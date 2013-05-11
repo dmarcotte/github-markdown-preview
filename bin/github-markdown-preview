@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+
+require 'github-markdown-preview'
+require 'optparse'
+
+opt_parser = OptionParser.new do |opt|
+  opt.banner = "Usage: github-markdown-preview PATH_TO_MD_FILE"
+  opt.separator  ""
+  opt.separator  "Options"
+
+  opt.on("-v", "--version", "print the version") do
+    $stdout.puts 'github-markdown-preview version ' + GithubMarkdownPreview::VERSION
+    Kernel.exit
+  end
+end
+
+opt_parser.parse!
+
+unless ARGV.count == 1
+  $stdout.puts opt_parser
+  exit 1
+end
+
+begin
+  source_file = ARGV.at(0)
+  preview = GithubMarkdownPreview::HtmlPreview.new(source_file)
+rescue GithubMarkdownPreview::FileNotFoundError
+  $stderr.puts "#{source_file}: No such file"
+  exit 1
+end
+
+if $stdout.isatty
+  $stdout.puts "Preview available at file://#{preview.preview_file}"
+else
+  $stdout.puts preview.preview_file
+end
+
+# delete preview html on exit
+preview.delete_on_exit = true
+
+# make sure we've said what we have to say before we block watching the file
+$stdout.flush
+
+# now watch for changes, blocking until we get killed
+begin
+  preview.watch!
+rescue Interrupt
+  # swallow this so we don't print junk to the user's terminal
+end
+
+
