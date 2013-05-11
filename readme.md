@@ -1,4 +1,4 @@
-# Local Github Markdown Preview
+# Local Github Markdown Preview [![Build Status](https://secure.travis-ci.org/dmarcotte/github-markdown-preview.png)](http://travis-ci.org/dmarcotte/github-markdown-preview)
 
 Use your favorite editor plus the usual edit/refresh cycle to quickly write and polish your Github markdown files.
 
@@ -26,7 +26,7 @@ github-markdown-preview <path/to/github-flavored/file.md>
 require 'github-markdown-preview'
 
 # create a preview, which writes the source_file.md.html file to disk
-preview = GithubMarkdownPreview::HtmlPreview('source_file.md')
+preview = GithubMarkdownPreview::HtmlPreview.new('source_file.md')
 
 # access the preview information
 preview.source_file # returns 'source_file.md'
