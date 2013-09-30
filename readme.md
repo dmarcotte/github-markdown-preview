@@ -10,6 +10,11 @@ This program marries [html-pipeline](https://github.com/jch/html-pipeline) with 
 ```
 gem install github-markdown-preview
 ```
+If the install fails, you may be missing a build dependency for the native extensions used in `github-linguist`.  Check your output for the following error, and install the suggested package:
+```
+*********** icu required (brew install icu4c or apt-get install libicu-dev) ***********
+```
+For any other failure, please [file an issue!](https://github.com/dmarcotte/github-markdown-preview/issues)
 
 ## Usage
 ### Command line
