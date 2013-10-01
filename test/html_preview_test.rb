@@ -24,8 +24,8 @@ class TestHtmlPreview < Minitest::Unit::TestCase
   # Requires you pass a block which returns true when your asynchronous process has finished
   def wait_for_async_operation
     start_time = Time.now
-    wait_limit = 60
-    polling_interval = 0.1
+    wait_limit = 30
+    polling_interval = 0.2
 
     until yield
       if Time.now - start_time > wait_limit
@@ -67,8 +67,8 @@ class TestHtmlPreview < Minitest::Unit::TestCase
   def test_preview_beside_src_file
     write(@source_file_path, '## foo')
     markdown_preview = @ghp.new( @source_file_path )
-    assert_equal File.dirname(@source_file_path),
-                 File.dirname(markdown_preview.preview_file),
+    assert_equal File.dirname(Pathname.new(@source_file_path).realpath),
+                 File.dirname(Pathname.new(markdown_preview.preview_file).realpath),
                  'Preview file should be in same dir as source file'
   end
 
@@ -105,9 +105,10 @@ class TestHtmlPreview < Minitest::Unit::TestCase
     markdown_preview.on_update { updated_by_watch = true }
     markdown_preview.watch
 
-    write(@source_file_path, '## foo bar')
-
-    wait_for_async_operation { updated_by_watch }
+    wait_for_async_operation {
+      write(@source_file_path, '## foo bar')
+      updated_by_watch
+    }
 
     assert_match /.*<h2>foo bar<\/h2>.*/,
                  read(markdown_preview.preview_file)
