@@ -26,7 +26,7 @@ module GithubMarkdownPreview
 
       @pipeline_context = {
           :asset_root => "https://a248.e.akamai.net/assets.github.com/images/icons/",
-          :gfm => true
+          :gfm => false
       }
 
       @preview_pipeline = HTML::Pipeline.new [
@@ -131,15 +131,14 @@ module GithubMarkdownPreview
         .markdown-body h1 {
           margin-top: 0;
         }
+        .readme-content {
+          width: 750px;
+        }
       </style>
     </head>
     <body class="markdown-body" style="padding:20px;">
-      <div id="slider">
-        <div class="frames">
-          <div class="frame frame-center">
-            #{preview_html}
-          </div>
-        </div>
+      <div class="readme-content">
+        #{preview_html}
       </div>
     </body>
 CONTENT
