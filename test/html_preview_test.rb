@@ -43,6 +43,14 @@ class TestHtmlPreview < Minitest::Unit::TestCase
                  'Preview should be correct on initialization'
   end
 
+  def test_headers_without_space
+    write(@source_file_path, '#foo')
+    markdown_preview = @ghp.new( @source_file_path )
+    assert_match /.*<h1>foo<\/h1>.*/,
+                 read(markdown_preview.preview_file),
+                 'Preview should contain header'
+  end
+
   def test_wrapper_markup_included
     write(@source_file_path, '## foo')
     markdown_preview = @ghp.new( @source_file_path )
