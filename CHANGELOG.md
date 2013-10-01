@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.6.0
+* Improve preview fidelity ([#9](https://github.com/dmarcotte/github-markdown-preview/pull/9))
+* Update dependencies ([#7](https://github.com/dmarcotte/github-markdown-preview/pull/7))
+
 ## v1.5.0
 * structure the app for gem deployment and add Bundler utilities
 * move the main code into the GithubMarkdownPreview::HtmlPreview
