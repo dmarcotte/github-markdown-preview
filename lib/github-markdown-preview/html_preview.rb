@@ -15,11 +15,11 @@ module GithubMarkdownPreview
     attr_accessor :delete_on_exit
 
     def initialize(source_file)
-      @source_file = File.expand_path(source_file)
-
-      unless File.exist?(@source_file)
+      unless File.exist?(source_file)
         raise FileNotFoundError.new("Cannot find source file: #{source_file}")
       end
+
+      @source_file = Pathname.new(source_file).realpath.to_s
 
       @preview_file = @source_file + '.html'
       @update_callbacks = []
@@ -58,7 +58,7 @@ module GithubMarkdownPreview
 
       # teach our listener how to update on change
       @listener.change do
-        update
+          update
       end
     end
 
