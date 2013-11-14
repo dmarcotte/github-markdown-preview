@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.6.1
+* Fix [#11](https://github.com/dmarcotte/github-markdown-preview/issues/11)
+
 ## v1.6.0
 * Improve preview fidelity ([#9](https://github.com/dmarcotte/github-markdown-preview/pull/9))
 * Update dependencies ([#7](https://github.com/dmarcotte/github-markdown-preview/pull/7))
