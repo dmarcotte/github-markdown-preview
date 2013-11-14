@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'active_support', '~> 3.0.0'
   s.add_dependency 'listen', '~> 1.3.1'
+  s.add_dependency 'pygments.rb', '0.5.2' # pin pygments.rb version to work around https://github.com/dmarcotte/github-markdown-preview/issues/11
   s.add_dependency 'github-linguist', '~> 2.9.4'
   s.add_dependency 'html-pipeline', '~> 0.3.1'
 
