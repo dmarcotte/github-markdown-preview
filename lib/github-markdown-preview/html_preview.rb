@@ -8,9 +8,6 @@ module GithubMarkdownPreview
   #
   # For a given file /path/to/file.md, generates /path/to/file.md.html
   class HtmlPreview
-
-    VERSION = '1.5'
-
     attr_reader :source_file, :preview_file
     attr_accessor :delete_on_exit
 
