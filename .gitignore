@@ -30,6 +30,9 @@ target
 .idea
 out
 
+# markdown previews
+*.md.html
+
 # bundler suggested ignores
 *.gem
 *.rbc
@@ -37,6 +40,7 @@ out
 .config
 .yardoc
 Gemfile.lock
+Gemfile.optional.lock
 InstalledFiles
 _yardoc
 coverage

@@ -1,0 +1,12 @@
+# custom Gemfile for bundling/testing with optional 'github-linguist' dep
+# usage: BUNDLE_GEMFILE=Gemfile.optional bundle <command>
+
+source 'https://rubygems.org'
+
+gemspec
+
+if RUBY_VERSION =~ /1.8/
+    gem 'escape_utils', '~> 0.3'
+end
+
+gem 'github-linguist'
