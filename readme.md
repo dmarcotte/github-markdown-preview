@@ -27,7 +27,7 @@ Use the `-c` switch to generate a preview of how Github renders comments/issues,
 * [newlines](https://help.github.com/articles/github-flavored-markdown#newlines) are rendered as hard breaks
 * `@mentions` are linked to the user's home page
 * [task lists](https://help.github.com/articles/github-flavored-markdown#task-lists) are rendered as checkboxes
-* TODO: issue numbers are linked to the issues page
+* [TODO](https://github.com/dmarcotte/github-markdown-preview/issues/17): auto-linked [references](https://help.github.com/articles/github-flavored-markdown#references)
 
 ```bash
 $ github-markdown-preview -c <path/to/comment/draft.md> # writes <path/to/comment/draft.md.html>
