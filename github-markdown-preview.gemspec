@@ -13,13 +13,15 @@ Gem::Specification.new do |s|
   s.description = %q{Local previews for Github Flavored Markdown files}
   s.license     = 'MIT'
 
-  s.add_dependency 'active_support', '~> 3.0.0'
-  s.add_dependency 'listen', '~> 1.3.1'
+  s.add_dependency 'listen', '1.3.1' # pin to latest version of listen which supports Ruby 1.8
   s.add_dependency 'pygments.rb', '0.5.2' # pin pygments.rb version to work around https://github.com/dmarcotte/github-markdown-preview/issues/11
   s.add_dependency 'github-linguist', '~> 2.9.4'
-  s.add_dependency 'html-pipeline', '~> 0.3.1'
+  s.add_dependency 'html-pipeline', '~> 1.1'
+  s.add_dependency 'sanitize', '2.0.3' # pin to latest version of sanitize which supports Ruby 1.8
+  s.add_dependency 'github-markdown', '~> 0.6'
+  s.add_dependency 'gemoji', '~> 1.5'
 
-  s.add_development_dependency 'minitest', '~> 4.7'
+  s.add_development_dependency 'minitest', '~> 5.2'
   s.add_development_dependency 'bundler', '~> 1.3'
   s.add_development_dependency 'rake', '~> 10.1'
 

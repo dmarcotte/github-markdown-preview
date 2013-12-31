@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 
-class TestBin < Minitest::Unit::TestCase
+class TestBin < Minitest::Test
   def setup
     @ghp_scipt = File.join(File.dirname(__FILE__), '..', 'bin', 'github-markdown-preview')
   end

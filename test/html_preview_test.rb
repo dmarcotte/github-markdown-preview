@@ -2,7 +2,7 @@ require 'github-markdown-preview'
 require 'minitest/autorun'
 require 'tmpdir'
 
-class TestHtmlPreview < Minitest::Unit::TestCase
+class TestHtmlPreview < Minitest::Test
 
   def setup
     @ghp = GithubMarkdownPreview::HtmlPreview
