@@ -3,10 +3,15 @@
 require 'github-markdown-preview'
 require 'optparse'
 
+comment_mode = false
 opt_parser = OptionParser.new do |opt|
   opt.banner = "Usage: github-markdown-preview PATH_TO_MD_FILE"
   opt.separator  ""
   opt.separator  "Options"
+
+  opt.on("-c", "--comment-mode", "renders a preview for Github comments/issues") do
+    comment_mode = true
+  end
 
   opt.on("-v", "--version", "print the version") do
     $stdout.puts 'github-markdown-preview version ' + GithubMarkdownPreview::VERSION
@@ -23,7 +28,7 @@ end
 
 begin
   source_file = ARGV.at(0)
-  preview = GithubMarkdownPreview::HtmlPreview.new(source_file)
+  preview = GithubMarkdownPreview::HtmlPreview.new(source_file, { :delete_on_exit => true, :comment_mode => comment_mode })
 rescue GithubMarkdownPreview::FileNotFoundError
   $stderr.puts "#{source_file}: No such file"
   exit 1
@@ -34,9 +39,6 @@ if $stdout.isatty
 else
   $stdout.puts preview.preview_file
 end
-
-# delete preview html on exit
-preview.delete_on_exit = true
 
 # make sure we've said what we have to say before we block watching the file
 $stdout.flush

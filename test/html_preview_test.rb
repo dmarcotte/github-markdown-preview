@@ -52,12 +52,52 @@ class TestHtmlPreview < Minitest::Test
                  'Preview should be correct on initialization'
   end
 
-  def test_headers_without_space
+  def test_word_immediately_after_hash
     write(@source_file_path, '#foo')
     markdown_preview = @ghp.new( @source_file_path )
     assert_match /.*<h1>foo<\/h1>.*/,
                  read(markdown_preview.preview_file),
-                 'Preview should contain header'
+                 'Preview should render #foo as a header'
+  end
+
+  def test_comment_mode_word_immediately_after_hash
+    write(@source_file_path, '#foo')
+    markdown_preview = @ghp.new( @source_file_path, { :comment_mode => true } )
+    assert_match /.*#foo*/,
+                 read(markdown_preview.preview_file),
+                 'Preview should render #foo directly'
+  end
+
+  def test_newlines_ignored
+    write(@source_file_path, "foo\nbar")
+    markdown_preview = @ghp.new( @source_file_path )
+    assert_match /.*foo\nbar*/,
+                 read(markdown_preview.preview_file),
+                 'Should not contain <br> for newline'
+  end
+
+  def test_comment_mode_newlines_respected
+    write(@source_file_path, "foo\nbar")
+    markdown_preview = @ghp.new( @source_file_path, { :comment_mode => true } )
+    assert_match markdown_preview.wrap_preview("<p>foo<br>\nbar</p>"),
+                 read(markdown_preview.preview_file),
+                 'Should insert <br> for newline in comment mode'
+  end
+
+  def test_at_mentions_not_linked
+    write(@source_file_path, "@username")
+    markdown_preview = @ghp.new( @source_file_path )
+    assert_match markdown_preview.wrap_preview("<p>@username</p>"),
+                 read(markdown_preview.preview_file),
+                 '@mentions should not be linked'
+  end
+
+  def test_comment_mode_at_mentions_linked
+    write(@source_file_path, "@username")
+    markdown_preview = @ghp.new( @source_file_path, { :comment_mode => true } )
+    assert_match markdown_preview.wrap_preview('<p><a href="https://github.com/username" class="user-mention">@username</a></p>'),
+                 read(markdown_preview.preview_file),
+                 '@mentions should create links'
   end
 
   def test_wrapper_markup_included
@@ -118,8 +158,7 @@ class TestHtmlPreview < Minitest::Test
   def test_preview_delete_on_exit
     at_exit { assert !File.exist?(@source_file_path + '.html'), 'Preview file should be deleted on exit' }
     write(@source_file_path, '## foo')
-    markdown_preview = @ghp.new( @source_file_path )
-    markdown_preview.delete_on_exit = true
+    @ghp.new( @source_file_path, { :delete_on_exit => true } )
   end
 
   def test_update_callbacks
