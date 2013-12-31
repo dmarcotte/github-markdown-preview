@@ -2,6 +2,13 @@ require 'github-markdown-preview'
 require 'minitest/autorun'
 require 'tmpdir'
 
+begin
+  require 'linguist'
+  LINGUIST_LOADED = true
+rescue LoadError => _
+  LINGUIST_LOADED = false
+end
+
 class TestHtmlPreview < Minitest::Test
 
   def setup
@@ -10,7 +17,9 @@ class TestHtmlPreview < Minitest::Test
   end
 
   def write(file_name, text)
-    File.open(file_name, 'w') { |f| f.write(text) }
+    File.open(file_name, 'w') do |f|
+      f.puts(text)
+    end
   end
 
   def read(file_name)
@@ -57,6 +66,25 @@ class TestHtmlPreview < Minitest::Test
     assert_equal markdown_preview.wrap_preview("<h2>foo<\/h2>"),
                  read(markdown_preview.preview_file),
                  'Wrapper markup should be in preview file'
+  end
+
+  if LINGUIST_LOADED
+    def test_uses_syntax_highlighting
+      write(@source_file_path, "```ruby\nnil\n```")
+      markdown_preview = @ghp.new( @source_file_path )
+
+      assert_equal markdown_preview.wrap_preview("<div class=\"highlight highlight-ruby\"><pre><span class=\"kp\">nil</span>\n</pre></div>"),
+                   read(markdown_preview.preview_file),
+                   'Decorated code should be in preview file'
+    end
+  else
+    def test_no_syntax_highlighting
+      write(@source_file_path, "```ruby\nnil\n```")
+      markdown_preview = @ghp.new( @source_file_path )
+      assert_equal markdown_preview.wrap_preview("<pre lang=\"ruby\"><code>nil\n</code></pre>"),
+                   read(markdown_preview.preview_file),
+                   'Undecorated code should be in preview file'
+    end
   end
 
   def test_update_preview
@@ -117,6 +145,8 @@ class TestHtmlPreview < Minitest::Test
       write(@source_file_path, '## foo bar')
       updated_by_watch
     }
+
+    markdown_preview.end_watch
 
     assert_match /.*<h2>foo bar<\/h2>.*/,
                  read(markdown_preview.preview_file)

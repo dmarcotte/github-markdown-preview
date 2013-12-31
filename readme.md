@@ -10,18 +10,23 @@ This program marries [html-pipeline](https://github.com/jch/html-pipeline) with 
 ```
 gem install github-markdown-preview
 ```
-If the install fails, you may be missing a build dependency for the native extensions used in `github-linguist`.  Check your output for the following error, and install the suggested package:
+
+### Enabling syntax highlighting for code blocks
+To enable syntax highlighting for code blocks, you will need to install [`github-linguist`](https://github.com/github/linguist):
 ```
-*********** icu required (brew install icu4c or apt-get install libicu-dev) ***********
+gem install github-linguist
 ```
-For any other failure, please [file an issue!](https://github.com/dmarcotte/github-markdown-preview/issues)
+
+Note that this install will fail unless your system meets the requirements needed to build it native extensions:
+* You will to either `brew install icu4c` or `apt-get install libicu-dev`
+* On Mac, you will need to have XCode installed (seems like a full install is required, not just the Command Line Tools)
 
 ## Usage
 ### Command line
 ```bash
-# This will write the html preview along side your markdown file (<path/to/github-flavored/file.md.html>)
+# This will write the html preview along side your markdown file (<path/to/markdown/file.md.html>)
 # Open in your favorite browser and enjoy!
-github-markdown-preview <path/to/github-flavored/file.md>
+github-markdown-preview <path/to/markdown/file.md>
 ```
 * The `.html` preview is written beside your `.md` file so that you can validate [relative links](https://github.com/blog/1395-relative-links-in-markup-files) locally
 * The `.html` preview is deleted when the script exits
@@ -59,20 +64,23 @@ preview.delete_on_exit = true
 
 ## Developing
 ```bash
-bundle # grab the dependencies
-rake test # verify you're in good shape
+$ bundle install
+$ rake test
 ```
-If you get a `require` error, you may need to set `RUBYOPT` to tell Ruby to grab dependencies from `rubygems`
+
+Alternatively, to test with optional dependencies
 ```bash
-export RUBYOPT='rubygems' # you'll probably want to persist this wherever you manage your env variables
+$ BUNDLE_GEMFILE=Gemfile.optional bundle install
+$ BUNDLE_GEMFILE=Gemfile.optional rake test
 ```
+
 To run your development copy of the main script without installing it
-```
-bundle exec bin/github-markdown-preview
+```bash
+$ bundle exec bin/github-markdown-preview
 ```
 To install the your development copy to your system
-```
-rake install
+```bash
+$ rake install
 ```
 
 ## Contributing

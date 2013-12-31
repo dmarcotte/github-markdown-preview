@@ -11,6 +11,13 @@ module GithubMarkdownPreview
     attr_reader :source_file, :preview_file
     attr_accessor :delete_on_exit
 
+    begin
+      require 'linguist'
+      SYNTAX_HIGHLIGHTS = true
+    rescue LoadError => _
+      SYNTAX_HIGHLIGHTS = false
+    end
+
     def initialize(source_file)
       unless File.exist?(source_file)
         raise FileNotFoundError.new("Cannot find source file: #{source_file}")
@@ -26,14 +33,19 @@ module GithubMarkdownPreview
           :gfm => false
       }
 
-      @preview_pipeline = HTML::Pipeline.new [
-                                                 HTML::Pipeline::MarkdownFilter,
-                                                 HTML::Pipeline::SanitizationFilter,
-                                                 HTML::Pipeline::ImageMaxWidthFilter,
-                                                 HTML::Pipeline::HttpsFilter,
-                                                 HTML::Pipeline::EmojiFilter,
-                                                 HTML::Pipeline::SyntaxHighlightFilter
-                                             ]
+      filters = [
+          HTML::Pipeline::MarkdownFilter,
+          HTML::Pipeline::SanitizationFilter,
+          HTML::Pipeline::ImageMaxWidthFilter,
+          HTML::Pipeline::HttpsFilter,
+          HTML::Pipeline::EmojiFilter
+      ]
+
+      if HtmlPreview::SYNTAX_HIGHLIGHTS
+        filters << HTML::Pipeline::SyntaxHighlightFilter
+      end
+
+      @preview_pipeline = HTML::Pipeline.new filters
 
       # generate initial preview
       update
@@ -66,7 +78,7 @@ module GithubMarkdownPreview
         raise FileNotFoundError.new("Source file deleted")
       end
 
-      markdown_render = @preview_pipeline.call(File.open(@source_file).read, @pipeline_context, {})[:output].to_s
+      markdown_render = @preview_pipeline.call(IO.read(@source_file), @pipeline_context, {})[:output].to_s
       preview_html = wrap_preview(markdown_render)
 
       File.open(@preview_file, 'w') do |f|
