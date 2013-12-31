@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.0.0
+* Add the ability to render a [preview of how Github renders comments/issues](https://github.com/dmarcotte/github-markdown-preview#comment-mode)
+* Make the `github-linguist` dependency [optional](https://github.com/dmarcotte/github-markdown-preview/pull/14)
+* [Update dependencies](https://github.com/dmarcotte/github-markdown-preview/pull/13)
+* Breaking changes:
+    - `preview.delete_on_exit` no longer exists.  To delete the preview on exit, pass the `:delete_on_exit = true` option ([example here](https://github.com/dmarcotte/github-markdown-preview#code))
+    - Since `github-linguist` is not longer required, previews on systems without it installed will not have syntax highlighting
+
 ## v1.6.1
 * Fix [#11](https://github.com/dmarcotte/github-markdown-preview/issues/11)
 
