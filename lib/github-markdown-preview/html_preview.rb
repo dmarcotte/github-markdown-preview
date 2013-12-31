@@ -54,6 +54,7 @@ module GithubMarkdownPreview
 
       if options[:comment_mode]
         filters << HTML::Pipeline::MentionFilter
+        filters << GithubMarkdownPreview::Pipeline::TaskListFilter
       end
 
       @preview_pipeline = HTML::Pipeline.new filters

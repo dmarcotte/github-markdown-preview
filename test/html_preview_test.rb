@@ -68,6 +68,22 @@ class TestHtmlPreview < Minitest::Test
                  'Preview should render #foo directly'
   end
 
+  def test_default_mode_ignores_task_lists
+    write(@source_file_path, '- [ ] task')
+    markdown_preview = @ghp.new( @source_file_path)
+    assert_match markdown_preview.wrap_preview("<ul>\n<li>[ ] task</li>\n</ul>"),
+                 read(markdown_preview.preview_file),
+                 'Should not contain a task list item in default mode'
+  end
+
+  def test_comment_mode_task_lists
+    write(@source_file_path, '- [ ] task')
+    markdown_preview = @ghp.new( @source_file_path, { :comment_mode => true } )
+    assert_match markdown_preview.wrap_preview("<ul class=\"task-list\">\n<li class=\"task-list-item\">\n<input class=\"task-list-item-checkbox\" type=\"checkbox\"> task</li>\n</ul>"),
+                 read(markdown_preview.preview_file),
+                 'Should contain a task list item in comment mode'
+  end
+
   def test_newlines_ignored
     write(@source_file_path, "foo\nbar")
     markdown_preview = @ghp.new( @source_file_path )
