@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Daniel Marcotte']
   s.email       = 'dmarcotte@gmail.com'
   s.homepage    = 'https://github.com/dmarcotte/github-markdown-preview'
-  s.summary     = %q{Use your favorite editor plus the usual edit/refresh cycle to quickly write and polish your Github markdown files.}
-  s.description = %q{Local previews for Github Flavored Markdown files}
+  s.summary     = %q{Use your favorite editor plus the usual edit/refresh cycle to quickly write and polish your Github markdown}
+  s.description = %q{Local previews for Github markdown}
   s.license     = 'MIT'
 
   s.add_dependency 'listen', '1.3.1' # pin to latest version of listen which supports Ruby 1.8

@@ -9,7 +9,6 @@ module GithubMarkdownPreview
   # For a given file /path/to/file.md, generates /path/to/file.md.html
   class HtmlPreview
     attr_reader :source_file, :preview_file
-    attr_accessor :delete_on_exit
 
     begin
       require 'linguist'
@@ -18,19 +17,27 @@ module GithubMarkdownPreview
       SYNTAX_HIGHLIGHTS = false
     end
 
-    def initialize(source_file)
+    def initialize(source_file, options = {})
       unless File.exist?(source_file)
         raise FileNotFoundError.new("Cannot find source file: #{source_file}")
       end
 
+      options = {
+          :delete_on_exit => false,
+          :comment_mode => false
+      }.merge(options)
+
       @source_file = Pathname.new(source_file).realpath.to_s
 
       @preview_file = @source_file + '.html'
+      @preview_width = options[:comment_mode] ? 712 : 722
+
       @update_callbacks = []
 
       @pipeline_context = {
           :asset_root => "https://a248.e.akamai.net/assets.github.com/images/icons/",
-          :gfm => false
+          :base_url => "https://github.com/",
+          :gfm => options[:comment_mode]
       }
 
       filters = [
@@ -45,13 +52,17 @@ module GithubMarkdownPreview
         filters << HTML::Pipeline::SyntaxHighlightFilter
       end
 
+      if options[:comment_mode]
+        filters << HTML::Pipeline::MentionFilter
+      end
+
       @preview_pipeline = HTML::Pipeline.new filters
 
       # generate initial preview
       update
 
       at_exit do
-        if :delete_on_exit
+        if options[:delete_on_exit]
           delete
         end
       end
@@ -141,7 +152,7 @@ module GithubMarkdownPreview
           margin-top: 0;
         }
         .readme-content {
-          width: 750px;
+          width: #{@preview_width}px;
         }
       </style>
     </head>
