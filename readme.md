@@ -54,7 +54,9 @@ preview = GithubMarkdownPreview::HtmlPreview.new('source_file.md')
 # you can also configure your preview with a couple of options
 preview = GithubMarkdownPreview::HtmlPreview.new('source_file.md', {
     :delete_on_exit => true, # delete the preview when the program exits
-    :comment_mode => true # render using the rules for Github comments/issues
+    :comment_mode => true, # render using the rules for Github comments/issues
+    :preview_file => 'custom_preview_file.html' # write preview to the given filename,
+                                                # rather than the default 'source_file.md.html'
 })
 
 # access the preview information

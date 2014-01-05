@@ -22,14 +22,15 @@ module GithubMarkdownPreview
         raise FileNotFoundError.new("Cannot find source file: #{source_file}")
       end
 
-      options = {
-          :delete_on_exit => false,
-          :comment_mode => false
-      }.merge(options)
-
       @source_file = Pathname.new(source_file).realpath.to_s
 
-      @preview_file = @source_file + '.html'
+      options = {
+          :delete_on_exit => false,
+          :comment_mode => false,
+          :preview_file => @source_file + '.html'
+      }.merge(options)
+
+      @preview_file = options[:preview_file]
       @preview_width = options[:comment_mode] ? 712 : 722
 
       @update_callbacks = []

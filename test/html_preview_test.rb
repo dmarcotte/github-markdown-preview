@@ -223,4 +223,15 @@ class TestHtmlPreview < Minitest::Test
     end
   end
 
+  def test_custom_preview_file
+    write(@source_file_path, '## foo')
+    custom_preview = File.join(Dir.tmpdir, 'custom_preview.html')
+    markdown_preview = @ghp.new( @source_file_path, { :preview_file => custom_preview} )
+    assert_equal custom_preview,
+                 markdown_preview.preview_file
+    assert_match /.*<h2>foo<\/h2>.*/,
+                 read(markdown_preview.preview_file),
+                 'Should write to the custom preview file'
+  end
+
 end
