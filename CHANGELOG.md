@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.0
+* Add option `:preview_file` for specifying a custom preview file
+* Refactor so the filters and context used to configure html-pipeline can be easily overriden/monkey-patched
+
 ## v2.0.0
 * Add the ability to render a [preview of how Github renders comments/issues](https://github.com/dmarcotte/github-markdown-preview#comment-mode)
 * Make the `github-linguist` dependency [optional](https://github.com/dmarcotte/github-markdown-preview/pull/14)
