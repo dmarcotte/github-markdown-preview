@@ -22,42 +22,22 @@ module GithubMarkdownPreview
         raise FileNotFoundError.new("Cannot find source file: #{source_file}")
       end
 
-      options = {
-          :delete_on_exit => false,
-          :comment_mode => false
-      }.merge(options)
-
       @source_file = Pathname.new(source_file).realpath.to_s
 
-      @preview_file = @source_file + '.html'
+      options = {
+          :delete_on_exit => false,
+          :comment_mode => false,
+          :preview_file => @source_file + '.html'
+      }.merge(options)
+
+      @preview_file = options[:preview_file]
       @preview_width = options[:comment_mode] ? 712 : 722
 
       @update_callbacks = []
 
-      @pipeline_context = {
-          :asset_root => "https://a248.e.akamai.net/assets.github.com/images/icons/",
-          :base_url => "https://github.com/",
-          :gfm => options[:comment_mode]
-      }
+      @pipeline_context = pipeline_context(options)
 
-      filters = [
-          HTML::Pipeline::MarkdownFilter,
-          HTML::Pipeline::SanitizationFilter,
-          HTML::Pipeline::ImageMaxWidthFilter,
-          HTML::Pipeline::HttpsFilter,
-          HTML::Pipeline::EmojiFilter
-      ]
-
-      if HtmlPreview::SYNTAX_HIGHLIGHTS
-        filters << HTML::Pipeline::SyntaxHighlightFilter
-      end
-
-      if options[:comment_mode]
-        filters << HTML::Pipeline::MentionFilter
-        filters << GithubMarkdownPreview::Pipeline::TaskListFilter
-      end
-
-      @preview_pipeline = HTML::Pipeline.new filters
+      @preview_pipeline = HTML::Pipeline.new pipeline_filters(options)
 
       # generate initial preview
       update
@@ -81,6 +61,39 @@ module GithubMarkdownPreview
       @listener.change do
           update
       end
+    end
+
+    ##
+    # Compute the context to pass to html-pipeline based on the given options
+    def pipeline_context(options)
+      {
+          :asset_root => "https://a248.e.akamai.net/assets.github.com/images/icons/",
+          :base_url => "https://github.com/",
+          :gfm => options[:comment_mode]
+      }
+    end
+
+    ##
+    # Compute the filters to use in the html-pipeline based on the given options
+    def pipeline_filters(options)
+      filters = [
+          HTML::Pipeline::MarkdownFilter,
+          HTML::Pipeline::SanitizationFilter,
+          HTML::Pipeline::ImageMaxWidthFilter,
+          HTML::Pipeline::HttpsFilter,
+          HTML::Pipeline::EmojiFilter
+      ]
+
+      if HtmlPreview::SYNTAX_HIGHLIGHTS
+        filters << HTML::Pipeline::SyntaxHighlightFilter
+      end
+
+      if options[:comment_mode]
+        filters << HTML::Pipeline::MentionFilter
+        filters << GithubMarkdownPreview::Pipeline::TaskListFilter
+      end
+
+      filters
     end
 
     ##
