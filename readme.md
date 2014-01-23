@@ -1,4 +1,5 @@
-# Local Github Markdown Preview [![Build Status](https://secure.travis-ci.org/dmarcotte/github-markdown-preview.png)](http://travis-ci.org/dmarcotte/github-markdown-preview)
+# Local Github Markdown Preview
+[![Build Status](https://travis-ci.org/dmarcotte/github-markdown-preview.png?branch=master)](https://travis-ci.org/dmarcotte/github-markdown-preview)
 
 Use your favorite editor plus the usual edit/refresh cycle to quickly write and polish your markdown for Github.
 
