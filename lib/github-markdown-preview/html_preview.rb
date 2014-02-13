@@ -157,9 +157,10 @@ module GithubMarkdownPreview
       output_file_content =<<CONTENT
     <head>
       <meta charset="utf-8">
-      <link rel=stylesheet type=text/css href="#{Resources.expand_path(File.join('css','github.css'))}">
-      <link rel=stylesheet type=text/css href="#{Resources.expand_path(File.join('css','github2.css'))}">
       <style type="text/css">
+        #{IO.read(Resources.expand_path(File.join('css','github.css')))}
+        #{IO.read(Resources.expand_path(File.join('css','github2.css')))}
+
         html, .markdown-body {
           overflow: inherit;
         }
