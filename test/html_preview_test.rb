@@ -47,7 +47,7 @@ class TestHtmlPreview < Minitest::Test
   def test_create_preview_on_init
     write(@source_file_path, '## foo')
     markdown_preview = @ghp.new( @source_file_path )
-    assert_match /.*<h2>foo<\/h2>.*/,
+    assert_equal markdown_preview.wrap_preview('<h2>foo</h2>'),
                  read(markdown_preview.preview_file),
                  'Preview should be correct on initialization'
   end
@@ -55,7 +55,7 @@ class TestHtmlPreview < Minitest::Test
   def test_word_immediately_after_hash
     write(@source_file_path, '#foo')
     markdown_preview = @ghp.new( @source_file_path )
-    assert_match /.*<h1>foo<\/h1>.*/,
+    assert_equal markdown_preview.wrap_preview('<h1>foo</h1>'),
                  read(markdown_preview.preview_file),
                  'Preview should render #foo as a header'
   end
@@ -63,7 +63,7 @@ class TestHtmlPreview < Minitest::Test
   def test_comment_mode_word_immediately_after_hash
     write(@source_file_path, '#foo')
     markdown_preview = @ghp.new( @source_file_path, { :comment_mode => true } )
-    assert_match /.*#foo*/,
+    assert_equal markdown_preview.wrap_preview('<p>#foo</p>'),
                  read(markdown_preview.preview_file),
                  'Preview should render #foo directly'
   end
@@ -71,7 +71,7 @@ class TestHtmlPreview < Minitest::Test
   def test_default_mode_ignores_task_lists
     write(@source_file_path, '- [ ] task')
     markdown_preview = @ghp.new( @source_file_path)
-    assert_match markdown_preview.wrap_preview("<ul>\n<li>[ ] task</li>\n</ul>"),
+    assert_equal markdown_preview.wrap_preview("<ul>\n<li>[ ] task</li>\n</ul>"),
                  read(markdown_preview.preview_file),
                  'Should not contain a task list item in default mode'
   end
@@ -79,7 +79,7 @@ class TestHtmlPreview < Minitest::Test
   def test_comment_mode_task_lists
     write(@source_file_path, '- [ ] task')
     markdown_preview = @ghp.new( @source_file_path, { :comment_mode => true } )
-    assert_match markdown_preview.wrap_preview("<ul class=\"task-list\">\n<li class=\"task-list-item\">\n<input class=\"task-list-item-checkbox\" type=\"checkbox\"> task</li>\n</ul>"),
+    assert_equal markdown_preview.wrap_preview("<ul class=\"task-list\">\n<li class=\"task-list-item\">\n<input class=\"task-list-item-checkbox\" type=\"checkbox\"> task</li>\n</ul>"),
                  read(markdown_preview.preview_file),
                  'Should contain a task list item in comment mode'
   end
@@ -87,7 +87,7 @@ class TestHtmlPreview < Minitest::Test
   def test_newlines_ignored
     write(@source_file_path, "foo\nbar")
     markdown_preview = @ghp.new( @source_file_path )
-    assert_match /.*foo\nbar*/,
+    assert_equal markdown_preview.wrap_preview("<p>foo\nbar</p>"),
                  read(markdown_preview.preview_file),
                  'Should not contain <br> for newline'
   end
@@ -95,7 +95,7 @@ class TestHtmlPreview < Minitest::Test
   def test_comment_mode_newlines_respected
     write(@source_file_path, "foo\nbar")
     markdown_preview = @ghp.new( @source_file_path, { :comment_mode => true } )
-    assert_match markdown_preview.wrap_preview("<p>foo<br>\nbar</p>"),
+    assert_equal markdown_preview.wrap_preview("<p>foo<br>\nbar</p>"),
                  read(markdown_preview.preview_file),
                  'Should insert <br> for newline in comment mode'
   end
@@ -103,7 +103,7 @@ class TestHtmlPreview < Minitest::Test
   def test_at_mentions_not_linked
     write(@source_file_path, "@username")
     markdown_preview = @ghp.new( @source_file_path )
-    assert_match markdown_preview.wrap_preview("<p>@username</p>"),
+    assert_equal markdown_preview.wrap_preview("<p>@username</p>"),
                  read(markdown_preview.preview_file),
                  '@mentions should not be linked'
   end
@@ -111,7 +111,7 @@ class TestHtmlPreview < Minitest::Test
   def test_comment_mode_at_mentions_linked
     write(@source_file_path, "@username")
     markdown_preview = @ghp.new( @source_file_path, { :comment_mode => true } )
-    assert_match markdown_preview.wrap_preview('<p><a href="https://github.com/username" class="user-mention">@username</a></p>'),
+    assert_equal markdown_preview.wrap_preview('<p><a href="https://github.com/username" class="user-mention">@username</a></p>'),
                  read(markdown_preview.preview_file),
                  '@mentions should create links'
   end
@@ -119,7 +119,7 @@ class TestHtmlPreview < Minitest::Test
   def test_wrapper_markup_included
     write(@source_file_path, '## foo')
     markdown_preview = @ghp.new( @source_file_path )
-    assert_equal markdown_preview.wrap_preview("<h2>foo<\/h2>"),
+    assert_equal markdown_preview.wrap_preview("<h2>foo</h2>"),
                  read(markdown_preview.preview_file),
                  'Wrapper markup should be in preview file'
   end
@@ -146,12 +146,13 @@ class TestHtmlPreview < Minitest::Test
   def test_update_preview
     write(@source_file_path, '## foo')
     markdown_preview = @ghp.new( @source_file_path )
-    assert_match /.*<h2>foo<\/h2>.*/, read(markdown_preview.preview_file),
+    assert_equal markdown_preview.wrap_preview('<h2>foo</h2>'),
+                 read(markdown_preview.preview_file),
                  'Preview should be initially rendered correctly'
 
     write(@source_file_path, '## foo bar')
     markdown_preview.update
-    assert_match /.*<h2>foo bar<\/h2>.*/,
+    assert_equal markdown_preview.wrap_preview('<h2>foo bar</h2>'),
                  read(markdown_preview.preview_file),
                  'Preview should be updated correctly'
   end
@@ -203,7 +204,7 @@ class TestHtmlPreview < Minitest::Test
 
     markdown_preview.end_watch
 
-    assert_match /.*<h2>foo bar<\/h2>.*/,
+    assert_equal markdown_preview.wrap_preview('<h2>foo bar</h2>'),
                  read(markdown_preview.preview_file)
                  'Preview file should be updated correctly by file watcher'
   end
@@ -229,7 +230,7 @@ class TestHtmlPreview < Minitest::Test
     markdown_preview = @ghp.new( @source_file_path, { :preview_file => custom_preview} )
     assert_equal custom_preview,
                  markdown_preview.preview_file
-    assert_match /.*<h2>foo<\/h2>.*/,
+    assert_equal markdown_preview.wrap_preview('<h2>foo</h2>'),
                  read(markdown_preview.preview_file),
                  'Should write to the custom preview file'
   end
