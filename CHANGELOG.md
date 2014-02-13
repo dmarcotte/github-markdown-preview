@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.1
+* Specify UTF-8 for the preview (fixes [#20](https://github.com/dmarcotte/github-markdown-preview/issues/20))
+* Inline the Github CSS in the preview to make it a stand-alone html file (fixes [#21](https://github.com/dmarcotte/github-markdown-preview/issues/21))
+
 ## v2.1.0
 * Add option `:preview_file` for specifying a custom preview file
 * Refactor so the filters and context used to configure html-pipeline can be easily overriden/monkey-patched
