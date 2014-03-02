@@ -17,7 +17,7 @@ gem install github-markdown-preview
 Generate a preview of how Github renders markdown files in a repository:
 
 ```bash
-$ github-markdown-preview <path/to/markdown/file.md> # writes <path/to/markdown/file.md>
+$ github-markdown-preview <path/to/markdown/file.md> # writes <path/to/markdown/file.md.html>
 ```
 
 * The `.html` preview is written beside your `.md` file so that you can validate [relative links](https://github.com/blog/1395-relative-links-in-markup-files) locally
