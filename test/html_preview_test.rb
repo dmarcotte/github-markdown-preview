@@ -69,12 +69,12 @@ class TestHtmlPreview < Minitest::Test
                  'Preview should render #foo directly'
   end
 
-  def test_default_mode_ignores_task_lists
+  def test_default_mode_task_lists
     write(@source_file_path, '- [ ] task')
-    markdown_preview = @ghp.new( @source_file_path)
-    assert_equal markdown_preview.wrap_preview("<ul>\n<li>[ ] task</li>\n</ul>"),
+    markdown_preview = @ghp.new( @source_file_path )
+    assert_equal markdown_preview.wrap_preview("<ul class=\"task-list\">\n<li class=\"task-list-item\">\n<input class=\"task-list-item-checkbox\" type=\"checkbox\" disabled> task</li>\n</ul>"),
                  read(markdown_preview.preview_file),
-                 'Should not contain a task list item in default mode'
+                 'Should contain a (disabled) task list item in default mode'
   end
 
   def test_comment_mode_task_lists

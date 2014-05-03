@@ -3,10 +3,17 @@ require 'html/pipeline'
 module GithubMarkdownPreview
   class Pipeline
     # HTML filter that replaces `[ ] task` and `[x] task` list items with "task list" checkboxes
+    #
+    # Can be configured to render disabled checkboxes for the task by adding
+    # :disabled_tasks => true to the Html pipeline context
     class TaskListFilter < HTML::Pipeline::Filter
 
       COMPLETE_TASK_PATTERN = /^[\s]*(\[\s\])([\s]+[^\s]*)/
       INCOMPLETE_TASK_PATTERN = /^[\s]*(\[x\])([\s]+[^\s]*)/
+
+      def disabled_tasks
+        !!context[:disabled_tasks]
+      end
 
       def task_pattern(complete)
         task_character = complete ? 'x' : '\s'
@@ -14,7 +21,7 @@ module GithubMarkdownPreview
       end
 
       def task_markup(complete)
-        "<input class=\"task-list-item-checkbox\" type=\"checkbox\" #{complete ? 'checked' : ''}>"
+        "<input class=\"task-list-item-checkbox\" type=\"checkbox\" #{complete ? 'checked' : ''} #{disabled_tasks ? 'disabled' : ''}>"
       end
 
       def call
