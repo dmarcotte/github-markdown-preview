@@ -27,7 +27,6 @@ $ github-markdown-preview <path/to/markdown/file.md> # writes <path/to/markdown/
 Use the `-c` switch to generate a preview of how Github renders comments/issues, which differs from repository markdown files in a few ways:
 * [newlines](https://help.github.com/articles/github-flavored-markdown#newlines) are rendered as hard breaks
 * `@mentions` are linked to the user's home page
-* [task lists](https://help.github.com/articles/github-flavored-markdown#task-lists) are rendered as checkboxes
 * [TODO](https://github.com/dmarcotte/github-markdown-preview/issues/17): auto-linked [references](https://help.github.com/articles/github-flavored-markdown#references)
 
 ```bash

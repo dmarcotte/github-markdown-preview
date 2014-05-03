@@ -4,10 +4,10 @@ require 'github-markdown-preview'
 
 class HTML::Pipeline::MentionFilterTest < Minitest::Test
 
-  def filter(html)
+  def filter(html, context = nil)
     doc  = Nokogiri::HTML::DocumentFragment.parse(html)
 
-    res  = GithubMarkdownPreview::Pipeline::TaskListFilter.call(doc)
+    res  = GithubMarkdownPreview::Pipeline::TaskListFilter.call(doc, context)
     assert_same doc, res
 
     res.to_html
@@ -84,4 +84,13 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
     assert_equal "<ul><li>nope [ ] not a task</li></ul>",
                  result
   end
+
+  def test_disabled_tasks
+    html = "<ul><li>[ ] task</li></ul>"
+    result  = filter(html, { :disabled_tasks => true })
+
+    assert_equal "<ul class=\"task-list\"><li class=\"task-list-item\">\n<input class=\"task-list-item-checkbox\" type=\"checkbox\" disabled> task</li></ul>",
+                 result
+  end
+
 end
