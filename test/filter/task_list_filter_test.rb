@@ -1,3 +1,4 @@
+require_relative '../test_helper'
 require 'bundler/setup'
 require 'minitest/autorun'
 require 'github-markdown-preview'

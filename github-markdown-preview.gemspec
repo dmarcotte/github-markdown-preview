@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.description = %q{Local previews for Github markdown}
   s.license     = 'MIT'
 
-  s.add_dependency 'listen', '1.3.1'
+  s.add_dependency 'listen', '2.7'
   s.add_dependency 'html-pipeline', '~> 1.8'
   s.add_dependency 'sanitize', '~> 2.1'
   s.add_dependency 'github-markdown', '~> 0.6'
