@@ -1,3 +1,4 @@
+require_relative 'test_helper'
 require 'github-markdown-preview'
 require 'minitest/autorun'
 require 'tmpdir'
