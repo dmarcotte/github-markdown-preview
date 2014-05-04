@@ -65,7 +65,8 @@ module GithubMarkdownPreview
       {
           :asset_root => "https://a248.e.akamai.net/assets.github.com/images/icons/",
           :base_url => "https://github.com/",
-          :gfm => options[:comment_mode]
+          :gfm => options[:comment_mode],
+          :disabled_tasks => !options[:comment_mode]
       }
     end
 
@@ -77,7 +78,8 @@ module GithubMarkdownPreview
           HTML::Pipeline::SanitizationFilter,
           HTML::Pipeline::ImageMaxWidthFilter,
           HTML::Pipeline::HttpsFilter,
-          HTML::Pipeline::EmojiFilter
+          HTML::Pipeline::EmojiFilter,
+          GithubMarkdownPreview::Pipeline::TaskListFilter
       ]
 
       if HtmlPreview::SYNTAX_HIGHLIGHTS
@@ -86,7 +88,6 @@ module GithubMarkdownPreview
 
       if options[:comment_mode]
         filters << HTML::Pipeline::MentionFilter
-        filters << GithubMarkdownPreview::Pipeline::TaskListFilter
       end
 
       filters
