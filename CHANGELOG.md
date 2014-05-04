@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.0.0
+* Render task lists for readmes [#25](https://github.com/dmarcotte/github-markdown-preview/pull/25) ([Github announcement](https://github.com/blog/1825-task-lists-in-all-markdown-documents))
+* **Breaking changes:**
+    - Drop Ruby 1.8 support and upgrade all dependencies to latest [#26](https://github.com/dmarcotte/github-markdown-preview/pull/26)
+
 ## v2.1.1
 * Specify UTF-8 for the preview (fixes [#20](https://github.com/dmarcotte/github-markdown-preview/issues/20))
 * Inline the Github CSS in the preview to make it a stand-alone html file (fixes [#21](https://github.com/dmarcotte/github-markdown-preview/issues/21))
@@ -12,7 +17,7 @@
 * Add the ability to render a [preview of how Github renders comments/issues](https://github.com/dmarcotte/github-markdown-preview#comment-mode)
 * Make the `github-linguist` dependency [optional](https://github.com/dmarcotte/github-markdown-preview/pull/14)
 * [Update dependencies](https://github.com/dmarcotte/github-markdown-preview/pull/13)
-* Breaking changes:
+* **Breaking changes:**
     - `preview.delete_on_exit` no longer exists.  To delete the preview on exit, pass the `:delete_on_exit = true` option ([example here](https://github.com/dmarcotte/github-markdown-preview#code))
     - Since `github-linguist` is not longer required, previews on systems without it installed will not have syntax highlighting
 
