@@ -88,6 +88,8 @@ module GithubMarkdownPreview
 
       if options[:comment_mode]
         filters << HTML::Pipeline::MentionFilter
+      else
+        filters << HTML::Pipeline::TableOfContentsFilter
       end
 
       filters
