@@ -46,17 +46,17 @@ class TestHtmlPreview < Minitest::Test
   end
 
   def test_create_preview_on_init
-    write(@source_file_path, '## foo')
+    write(@source_file_path, 'foo')
     markdown_preview = @ghp.new( @source_file_path )
-    assert_equal markdown_preview.wrap_preview('<h2>foo</h2>'),
+    assert_equal markdown_preview.wrap_preview('<p>foo</p>'),
                  read(markdown_preview.preview_file),
                  'Preview should be correct on initialization'
   end
 
   def test_word_immediately_after_hash
-    write(@source_file_path, '#foo')
+    write(@source_file_path, 'foo')
     markdown_preview = @ghp.new( @source_file_path )
-    assert_equal markdown_preview.wrap_preview('<h1>foo</h1>'),
+    assert_equal markdown_preview.wrap_preview('<p>foo</p>'),
                  read(markdown_preview.preview_file),
                  'Preview should render #foo as a header'
   end
@@ -118,9 +118,9 @@ class TestHtmlPreview < Minitest::Test
   end
 
   def test_wrapper_markup_included
-    write(@source_file_path, '## foo')
+    write(@source_file_path, 'foo')
     markdown_preview = @ghp.new( @source_file_path )
-    assert_equal markdown_preview.wrap_preview("<h2>foo</h2>"),
+    assert_equal markdown_preview.wrap_preview("<p>foo</p>"),
                  read(markdown_preview.preview_file),
                  'Wrapper markup should be in preview file'
   end
@@ -145,15 +145,15 @@ class TestHtmlPreview < Minitest::Test
   end
 
   def test_update_preview
-    write(@source_file_path, '## foo')
+    write(@source_file_path, 'foo')
     markdown_preview = @ghp.new( @source_file_path )
-    assert_equal markdown_preview.wrap_preview('<h2>foo</h2>'),
+    assert_equal markdown_preview.wrap_preview('<p>foo</p>'),
                  read(markdown_preview.preview_file),
                  'Preview should be initially rendered correctly'
 
-    write(@source_file_path, '## foo bar')
+    write(@source_file_path, 'foo bar')
     markdown_preview.update
-    assert_equal markdown_preview.wrap_preview('<h2>foo bar</h2>'),
+    assert_equal markdown_preview.wrap_preview('<p>foo bar</p>'),
                  read(markdown_preview.preview_file),
                  'Preview should be updated correctly'
   end
@@ -192,20 +192,20 @@ class TestHtmlPreview < Minitest::Test
   end
 
   def test_watch_source_file
-    write(@source_file_path, '## foo')
+    write(@source_file_path, 'foo')
     markdown_preview = @ghp.new( @source_file_path )
     updated_by_watch = false
     markdown_preview.on_update { updated_by_watch = true }
     markdown_preview.watch
 
     wait_for_async_operation {
-      write(@source_file_path, '## foo bar')
+      write(@source_file_path, 'foo bar')
       updated_by_watch
     }
 
     markdown_preview.end_watch
 
-    assert_equal markdown_preview.wrap_preview('<h2>foo bar</h2>'),
+    assert_equal markdown_preview.wrap_preview('<p>foo bar</p>'),
                  read(markdown_preview.preview_file)
                  'Preview file should be updated correctly by file watcher'
   end
@@ -226,12 +226,12 @@ class TestHtmlPreview < Minitest::Test
   end
 
   def test_custom_preview_file
-    write(@source_file_path, '## foo')
+    write(@source_file_path, 'foo')
     custom_preview = File.join(Dir.tmpdir, 'custom_preview.html')
     markdown_preview = @ghp.new( @source_file_path, { :preview_file => custom_preview} )
     assert_equal custom_preview,
                  markdown_preview.preview_file
-    assert_equal markdown_preview.wrap_preview('<h2>foo</h2>'),
+    assert_equal markdown_preview.wrap_preview("<p>foo</p>"),
                  read(markdown_preview.preview_file),
                  'Should write to the custom preview file'
   end
