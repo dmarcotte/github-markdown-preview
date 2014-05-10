@@ -69,6 +69,22 @@ class TestHtmlPreview < Minitest::Test
                  'Preview should render #foo directly'
   end
 
+  def test_default_mode_anchors
+    write(@source_file_path, "# foo\n## bar")
+    markdown_preview = @ghp.new( @source_file_path )
+    assert_equal markdown_preview.wrap_preview("<h1>\n<a name=\"foo\" class=\"anchor\" href=\"#foo\"><span class=\"octicon octicon-link\"></span></a>foo</h1>\n\n<h2>\n<a name=\"bar\" class=\"anchor\" href=\"#bar\"><span class=\"octicon octicon-link\"></span></a>bar</h2>"),
+                 read(markdown_preview.preview_file),
+                 'Should contain anchor link markup in default mode'
+  end
+
+  def test_comment_mode_anchors
+    write(@source_file_path, "# foo\n## bar")
+    markdown_preview = @ghp.new( @source_file_path, { :comment_mode => true }  )
+    assert_equal markdown_preview.wrap_preview("<h1>foo</h1>\n\n<h2>bar</h2>"),
+                 read(markdown_preview.preview_file),
+                 'Should NOT contain anchor link markup in comment mode'
+  end
+
   def test_default_mode_task_lists
     write(@source_file_path, '- [ ] task')
     markdown_preview = @ghp.new( @source_file_path )
