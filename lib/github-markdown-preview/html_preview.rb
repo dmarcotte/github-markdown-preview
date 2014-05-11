@@ -189,7 +189,7 @@ module GithubMarkdownPreview
         }
       </style>
     </head>
-    <body class="markdown-body" style="padding:40px;">
+    <body class="markdown-body" style="padding:10px 40px;">
       <div class="readme-content">
         #{preview_html}
       </div>
