@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.0
+* Add anchor links in default mode [#30](https://github.com/dmarcotte/github-markdown-preview/pull/30), [#30](https://github.com/dmarcotte/github-markdown-preview/pull/30)
+
 ## v3.0.0
 * Render task lists for readmes [#25](https://github.com/dmarcotte/github-markdown-preview/pull/25) ([Github announcement](https://github.com/blog/1825-task-lists-in-all-markdown-documents))
 * **Breaking changes:**
