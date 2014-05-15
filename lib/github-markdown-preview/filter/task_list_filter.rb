@@ -25,16 +25,18 @@ module GithubMarkdownPreview
       end
 
       def call
-        doc.search('ul/li').each do |node|
+        process_task = Proc.new do |node|
           first_child = node.children.first
-          next if !first_child.text?
+          next unless first_child.text?
           content = first_child.to_html
           html = task_list_item_filter(content)
           next if html == content
-          node['class'] = 'task-list-item'
-          node.parent()['class'] = 'task-list'
+          (first_child.ancestors('li').first || { })['class'] = 'task-list-item'
+          (first_child.ancestors('ul').first || { })['class'] = 'task-list'
           first_child.replace(html)
         end
+        doc.search('ul/li').each &process_task
+        doc.search('ul/li/p').each &process_task
         doc
       end
 
