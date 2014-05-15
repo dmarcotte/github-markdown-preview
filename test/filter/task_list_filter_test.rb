@@ -42,7 +42,7 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
     html = "<ul><li>[ ] <em>task</em></li></ul>"
     result  = filter(html)
 
-    assert_equal "<ul class=\"task-list\"><li class=\"task-list-item\">\n<input class=\"task-list-item-checkbox\" type=\"checkbox\"><em>task</em>\n</li></ul>",
+    assert_equal "<ul class=\"task-list\"><li class=\"task-list-item\">\n<input class=\"task-list-item-checkbox\" type=\"checkbox\"> <em>task</em>\n</li></ul>",
                  result
   end
 
