@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.1
+* Fix double-spaced task lists [#31](https://github.com/dmarcotte/github-markdown-preview/pull/31)
+
 ## v3.1.0
 * Add anchor links in default mode [#28](https://github.com/dmarcotte/github-markdown-preview/pull/28), [#30](https://github.com/dmarcotte/github-markdown-preview/pull/30)
 
