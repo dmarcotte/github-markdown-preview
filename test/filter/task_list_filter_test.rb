@@ -42,7 +42,7 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
     html = "<ul><li>[ ] <em>task</em></li></ul>"
     result  = filter(html)
 
-    assert_equal "<ul class=\"task-list\"><li class=\"task-list-item\">\n<input class=\"task-list-item-checkbox\" type=\"checkbox\"><em>task</em>\n</li></ul>",
+    assert_equal "<ul class=\"task-list\"><li class=\"task-list-item\">\n<input class=\"task-list-item-checkbox\" type=\"checkbox\"> <em>task</em>\n</li></ul>",
                  result
   end
 
@@ -91,6 +91,14 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
     result  = filter(html, { :disabled_tasks => true })
 
     assert_equal "<ul class=\"task-list\"><li class=\"task-list-item\">\n<input class=\"task-list-item-checkbox\" type=\"checkbox\" disabled> task</li></ul>",
+                 result
+  end
+
+  def test_lists_with_p_tags
+    html = "<ul><li><p>[ ] One</p></li><li><p>[ ] Two</p></li></ul>"
+    result  = filter(html)
+
+    assert_equal "<ul class=\"task-list\">\n<li class=\"task-list-item\"><p><input class=\"task-list-item-checkbox\" type=\"checkbox\"> One</p></li>\n<li class=\"task-list-item\"><p><input class=\"task-list-item-checkbox\" type=\"checkbox\"> Two</p></li>\n</ul>",
                  result
   end
 

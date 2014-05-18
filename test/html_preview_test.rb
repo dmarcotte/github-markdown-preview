@@ -101,6 +101,14 @@ class TestHtmlPreview < Minitest::Test
                  'Should contain a task list item in comment mode'
   end
 
+  def test_double_spaced_task_lists
+    write(@source_file_path, "- [ ] one\n\n- [ ] two")
+    markdown_preview = @ghp.new( @source_file_path, { :comment_mode => true } )
+    assert_equal markdown_preview.wrap_preview("<ul class=\"task-list\">\n<li class=\"task-list-item\"><p><input class=\"task-list-item-checkbox\" type=\"checkbox\"> one</p></li>\n<li class=\"task-list-item\"><p><input class=\"task-list-item-checkbox\" type=\"checkbox\"> two</p></li>\n</ul>"),
+                 read(markdown_preview.preview_file),
+                 'Should render tasks even if list has extra spaces (which render as <p> elements)'
+  end
+
   def test_newlines_ignored
     write(@source_file_path, "foo\nbar")
     markdown_preview = @ghp.new( @source_file_path )
