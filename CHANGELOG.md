@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.2
+* Update Github css
+
 ## v3.1.1
 * Fix double-spaced task lists [#31](https://github.com/dmarcotte/github-markdown-preview/pull/31)
 
