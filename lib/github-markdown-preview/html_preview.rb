@@ -47,16 +47,6 @@ module GithubMarkdownPreview
           delete
         end
       end
-
-      # set up a listener which ca be asked to watch for updates
-      source_file_dir = File.dirname(@source_file)
-
-      @listener = Listen.to(source_file_dir) { update }
-
-      # only look at files who's basename matches the file we care about
-      # we could probably be more aggressive and make sure it's the *exact* file,
-      # but this is simpler, should be cross platform and at worst means a few no-op updates
-      @listener.only(%r{.*#{File.basename(@source_file)}$})
     end
 
     ##
@@ -137,6 +127,17 @@ module GithubMarkdownPreview
     end
 
     def start_watch(blocking = false)
+      unless @listener
+        # set up a listener which ca be asked to watch for updates
+        source_file_dir = File.dirname(@source_file)
+
+        @listener = Listen.to(source_file_dir) { update }
+
+        # only look at files who's basename matches the file we care about
+        # we could probably be more aggressive and make sure it's the *exact* file,
+        # but this is simpler, should be cross platform and at worst means a few no-op updates
+        @listener.only(%r{.*#{File.basename(@source_file)}$})
+      end
       @listener.start
       sleep if blocking
     end
@@ -145,7 +146,9 @@ module GithubMarkdownPreview
     ##
     # Stop watching source file (only applies to previews using the non-blocking #watch)
     def end_watch
-      @listener.stop
+      if @listener
+        @listener.stop
+      end
     end
 
     ##
