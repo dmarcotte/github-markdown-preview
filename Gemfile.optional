@@ -9,4 +9,4 @@ if RUBY_VERSION =~ /1.8/
     gem 'escape_utils', '~> 0.3'
 end
 
-gem 'github-linguist'
+gem 'github-linguist', '3.3.1'

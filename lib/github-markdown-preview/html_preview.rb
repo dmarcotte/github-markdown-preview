@@ -11,6 +11,7 @@ module GithubMarkdownPreview
     attr_reader :source_file, :preview_file
 
     begin
+      gem 'github-linguist', '=3.3.1'
       require 'linguist'
       SYNTAX_HIGHLIGHTS = true
     rescue LoadError => _
