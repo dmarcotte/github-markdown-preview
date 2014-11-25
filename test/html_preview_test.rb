@@ -72,7 +72,7 @@ class TestHtmlPreview < Minitest::Test
   def test_default_mode_anchors
     write(@source_file_path, "# foo\n## bar")
     markdown_preview = @ghp.new( @source_file_path )
-    assert_equal markdown_preview.wrap_preview("<h1>\n<a name=\"foo\" class=\"anchor\" href=\"#foo\"><span class=\"octicon octicon-link\"></span></a>foo</h1>\n\n<h2>\n<a name=\"bar\" class=\"anchor\" href=\"#bar\"><span class=\"octicon octicon-link\"></span></a>bar</h2>"),
+    assert_equal markdown_preview.wrap_preview("<h1>\n<a id=\"foo\" class=\"anchor\" href=\"#foo\" aria-hidden=\"true\"><span class=\"octicon octicon-link\"></span></a>foo</h1>\n\n<h2>\n<a id=\"bar\" class=\"anchor\" href=\"#bar\" aria-hidden=\"true\"><span class=\"octicon octicon-link\"></span></a>bar</h2>"),
                  read(markdown_preview.preview_file),
                  'Should contain anchor link markup in default mode'
   end
