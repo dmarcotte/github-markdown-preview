@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.4
+* Fix `unitialized constant GitHub (NameError)` [#36](https://github.com/dmarcotte/github-markdown-preview/pull/36)
+
 ## v3.1.3
 * Only initialize a listener if we're doing some listening [#34](https://github.com/dmarcotte/github-markdown-preview/pull/34)
 
