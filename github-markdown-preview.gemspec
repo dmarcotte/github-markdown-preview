@@ -18,6 +18,11 @@ Gem::Specification.new do |s|
   s.add_dependency 'sanitize', '~> 3.0'
   s.add_dependency 'github-markdown', '~> 0.6'
   s.add_dependency 'gemoji', '~> 2.1'
+
+  ##
+  # need to pin json to 1.8.1 for now because of an odd issue with
+  # 1.8.2 that leads to https://github.com/dmarcotte/github-markdown-preview/issues/35
+  # todo: lift this restriction eventually
   s.add_dependency 'json', '1.8.1'
 
   s.add_development_dependency 'minitest', '~> 5.4'
