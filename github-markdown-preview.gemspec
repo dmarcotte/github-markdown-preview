@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'sanitize', '~> 3.0'
   s.add_dependency 'github-markdown', '~> 0.6'
   s.add_dependency 'gemoji', '~> 2.1'
+  s.add_dependency 'json', '1.8.1'
 
   s.add_development_dependency 'minitest', '~> 5.4'
   s.add_development_dependency 'bundler', '~> 1.7'
