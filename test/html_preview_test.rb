@@ -1,13 +1,15 @@
-require_relative 'test_helper'
 require 'github-markdown-preview'
 require 'minitest/autorun'
 require 'tmpdir'
 
 begin
+  gem 'github-linguist', '=3.3.1'
   require 'linguist'
   LINGUIST_LOADED = true
+  puts "\nTesting with syntax highlighting ENABLED\n\n"
 rescue LoadError => _
   LINGUIST_LOADED = false
+  puts "\nTesting with syntax highlighting DISENABLED.  Use BUNDLE_GEMFILE=Gemfile.optional to enable\n\n"
 end
 
 class TestHtmlPreview < Minitest::Test

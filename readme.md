@@ -35,11 +35,11 @@ $ github-markdown-preview -c <path/to/comment/draft.md> # writes <path/to/commen
 
 ### Enable syntax highlighting for code blocks
 To enable syntax highlighting for code blocks, you will need to install [`github-linguist`](https://github.com/github/linguist):
-```
-gem install github-linguist -v 3.3.1
-```
 
-(Note that version 3.3.1 is required)
+```bash
+gem install github-linguist -v 3.3.1 # 3.3.1 is required
+gem install rugged -v 0.23.0 # undeclared dependency of linguist
+```
 
 Note that this install will fail unless your system meets the requirements needed to build its native extensions:
 * You will to either `brew install icu4c` or `apt-get install libicu-dev`
