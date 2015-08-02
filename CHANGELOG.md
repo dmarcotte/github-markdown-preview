@@ -1,5 +1,9 @@
 # Changelog
 
+## v4.0.0
+* **Breaking changes:**
+    - Drop Ruby 1.9 support and upgrade all dependencies to latest [#39](https://github.com/dmarcotte/github-markdown-preview/pull/39)
+
 ## v3.1.4
 * Fix `unitialized constant GitHub (NameError)` [#36](https://github.com/dmarcotte/github-markdown-preview/pull/36)
 
