@@ -13,20 +13,13 @@ Gem::Specification.new do |s|
   s.description = %q{Local previews for Github markdown}
   s.license     = 'MIT'
 
-  s.add_dependency 'listen', '2.8'
-  s.add_dependency 'html-pipeline', '~> 1.11'
-  s.add_dependency 'sanitize', '~> 3.0'
-  s.add_dependency 'github-markdown', '~> 0.6'
-  s.add_dependency 'gemoji', '~> 2.1'
-
-  ##
-  # need to pin json to 1.8.1 for now because of an odd issue with
-  # 1.8.2 that leads to https://github.com/dmarcotte/github-markdown-preview/issues/35
-  # todo: lift this restriction eventually
-  s.add_dependency 'json', '1.8.1'
+  s.add_dependency 'listen', '3.0.3'
+  s.add_dependency 'html-pipeline', '2.0'
+  s.add_dependency 'sanitize', '4.0.0'
+  s.add_dependency 'github-markdown', '0.6.8'
+  s.add_dependency 'gemoji', '2.1.0'
 
   s.add_development_dependency 'minitest', '~> 5.4'
-  s.add_development_dependency 'bundler', '~> 1.7'
   s.add_development_dependency 'rake', '~> 10.3'
 
   s.files         = `git ls-files`.split("\n")
