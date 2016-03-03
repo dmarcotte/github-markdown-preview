@@ -101,4 +101,11 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
                  result
   end
 
+  def test_lists_with_empty_items
+    html = "<ul><li></ul>"
+    result  = filter(html)
+    assert_equal "<ul><li></ul>",
+                 result
+  end
+
 end
