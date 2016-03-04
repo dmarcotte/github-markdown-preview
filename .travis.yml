@@ -8,4 +8,5 @@ env:
   - INCLUDE_LINGUIST=false
 
 before_install:
+  - gem install bundler
   - if [[ "$INCLUDE_LINGUIST" == "true" ]]; then BUNDLE_GEMFILE=Gemfile.optional; sudo apt-get install libicu-dev -y; fi
