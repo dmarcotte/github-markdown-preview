@@ -1,4 +1,6 @@
 require 'listen'
+require 'github/markdown.rb'
+# ^ '.rb' is intentional due to a rubygems bug, see github issue #35
 require 'html/pipeline'
 
 module GithubMarkdownPreview
