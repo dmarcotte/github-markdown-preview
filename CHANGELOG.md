@@ -1,5 +1,8 @@
 # Changelog
 
+## v4.0.2
+* Work around Rubygems bug causing "unitialized constant GitHub" [#42](https://github.com/dmarcotte/github-markdown-preview/pull/44)
+
 ## v4.0.1
 * Fix error on empty lists [#41](https://github.com/dmarcotte/github-markdown-preview/issues/41)
 
