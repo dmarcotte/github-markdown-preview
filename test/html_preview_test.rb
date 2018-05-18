@@ -74,7 +74,13 @@ class TestHtmlPreview < Minitest::Test
   def test_default_mode_anchors
     write(@source_file_path, "# foo\n## bar")
     markdown_preview = @ghp.new( @source_file_path )
-    assert_equal markdown_preview.wrap_preview("<h1>\n<a id=\"foo\" class=\"anchor\" href=\"#foo\" aria-hidden=\"true\"><span class=\"octicon octicon-link\"></span></a>foo</h1>\n\n<h2>\n<a id=\"bar\" class=\"anchor\" href=\"#bar\" aria-hidden=\"true\"><span class=\"octicon octicon-link\"></span></a>bar</h2>"),
+    html = <<HTML
+<h1>
+<a id=\"foo\" class=\"anchor\" href=\"#foo\" aria-hidden=\"true\"><span aria-hidden=\"true\" class=\"octicon octicon-link\"></span></a>foo</h1>
+<h2>
+<a id=\"bar\" class=\"anchor\" href=\"#bar\" aria-hidden=\"true\"><span aria-hidden=\"true\" class=\"octicon octicon-link\"></span></a>bar</h2>
+HTML
+    assert_equal markdown_preview.wrap_preview(html.chomp),
                  read(markdown_preview.preview_file),
                  'Should contain anchor link markup in default mode'
   end
@@ -82,7 +88,7 @@ class TestHtmlPreview < Minitest::Test
   def test_comment_mode_anchors
     write(@source_file_path, "# foo\n## bar")
     markdown_preview = @ghp.new( @source_file_path, { :comment_mode => true }  )
-    assert_equal markdown_preview.wrap_preview("<h1>foo</h1>\n\n<h2>bar</h2>"),
+    assert_equal markdown_preview.wrap_preview("<h1>foo</h1>\n<h2>bar</h2>"),
                  read(markdown_preview.preview_file),
                  'Should NOT contain anchor link markup in comment mode'
   end
@@ -106,7 +112,18 @@ class TestHtmlPreview < Minitest::Test
   def test_double_spaced_task_lists
     write(@source_file_path, "- [ ] one\n\n- [ ] two")
     markdown_preview = @ghp.new( @source_file_path, { :comment_mode => true } )
-    assert_equal markdown_preview.wrap_preview("<ul class=\"task-list\">\n<li class=\"task-list-item\"><p><input class=\"task-list-item-checkbox\" type=\"checkbox\"> one</p></li>\n<li class=\"task-list-item\"><p><input class=\"task-list-item-checkbox\" type=\"checkbox\"> two</p></li>\n</ul>"),
+    html = <<HTML
+<ul class=\"task-list\">
+<li class=\"task-list-item\">
+<p><input class=\"task-list-item-checkbox\" type=\"checkbox\"> one</p>
+</li>
+<li class=\"task-list-item\">
+<p><input class=\"task-list-item-checkbox\" type=\"checkbox\"> two</p>
+</li>
+</ul>
+HTML
+
+    assert_equal markdown_preview.wrap_preview(html.chomp),
                  read(markdown_preview.preview_file),
                  'Should render tasks even if list has extra spaces (which render as <p> elements)'
   end
