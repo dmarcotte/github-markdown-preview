@@ -13,14 +13,15 @@ Gem::Specification.new do |s|
   s.description = %q{Local previews for Github markdown}
   s.license     = 'MIT'
 
-  s.add_dependency 'listen', '3.0.3'
-  s.add_dependency 'html-pipeline', '2.0'
-  s.add_dependency 'sanitize', '4.0.0'
-  s.add_dependency 'github-markdown', '0.6.8'
-  s.add_dependency 'gemoji', '2.1.0'
+  s.add_dependency 'listen', '3.1.5'
+  s.add_dependency 'html-pipeline', '2.7.1'
+  s.add_dependency 'commonmarker', '0.17.9'
+  s.add_dependency 'sanitize', '4.6.4'
+  s.add_dependency 'github-markdown', '0.6.9'
+  s.add_dependency 'gemoji', '3.0.0'
 
-  s.add_development_dependency 'minitest', '~> 5.4'
-  s.add_development_dependency 'rake', '~> 10.3'
+  s.add_development_dependency 'minitest', '~> 5.11.3'
+  s.add_development_dependency 'rake', '~> 12.3.1'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

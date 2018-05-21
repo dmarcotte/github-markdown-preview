@@ -35,8 +35,8 @@ module GithubMarkdownPreview
           (first_child.ancestors('ul').first || { })['class'] = 'task-list'
           first_child.replace(html)
         end
-        doc.search('ul/li').each &process_task
-        doc.search('ul/li/p').each &process_task
+        doc.search('ul/li').each(&process_task)
+        doc.search('ul/li/p').each(&process_task)
         doc
       end
 

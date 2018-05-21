@@ -91,7 +91,7 @@ module GithubMarkdownPreview
     ##
     # Update the preview file
     def update
-      unless File.exists?(@source_file)
+      unless File.exist?(@source_file)
         raise FileNotFoundError.new("Source file deleted")
       end
 
