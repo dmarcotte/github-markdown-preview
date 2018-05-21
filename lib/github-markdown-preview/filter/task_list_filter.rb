@@ -27,7 +27,7 @@ module GithubMarkdownPreview
       def call
         process_task = Proc.new do |node|
           first_child = node.children.first
-          next unless first_child&.text?
+          next unless first_child && first_child.text?
           content = first_child.to_html
           html = task_list_item_filter(content)
           next if html == content
