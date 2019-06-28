@@ -36,6 +36,8 @@ module GithubMarkdownPreview
       @preview_file = options[:preview_file]
       @preview_width = options[:comment_mode] ? 712 : 722
 
+      @refresh_rate = options[:refresh_rate]
+
       @update_callbacks = []
 
       @pipeline_context = pipeline_context(options)
@@ -168,6 +170,7 @@ module GithubMarkdownPreview
       output_file_content =<<CONTENT
     <head>
       <meta charset="utf-8">
+      <meta http-equiv="refresh" content="#{@refresh_rate}">
       <style type="text/css">
         #{IO.read(Resources.expand_path(File.join('css','github.css')))}
         #{IO.read(Resources.expand_path(File.join('css','github2.css')))}

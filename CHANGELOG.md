@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+* Add an automatic refresh option
+
 ## v4.0.2
 * Work around Rubygems bug causing "unitialized constant GitHub" [#42](https://github.com/dmarcotte/github-markdown-preview/pull/44)
 
