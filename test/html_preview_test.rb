@@ -2,16 +2,6 @@ require 'github-markdown-preview'
 require 'minitest/autorun'
 require 'tmpdir'
 
-begin
-  gem 'github-linguist', '=3.3.1'
-  require 'linguist'
-  LINGUIST_LOADED = true
-  puts "\nTesting with syntax highlighting ENABLED\n\n"
-rescue LoadError => _
-  LINGUIST_LOADED = false
-  puts "\nTesting with syntax highlighting DISENABLED.  Use BUNDLE_GEMFILE=Gemfile.optional to enable\n\n"
-end
-
 class TestHtmlPreview < Minitest::Test
 
   def setup
@@ -168,23 +158,14 @@ HTML
                  'Wrapper markup should be in preview file'
   end
 
-  if LINGUIST_LOADED
-    def test_uses_syntax_highlighting
-      write(@source_file_path, "```ruby\nnil\n```")
-      markdown_preview = @ghp.new( @source_file_path )
 
-      assert_equal markdown_preview.wrap_preview("<div class=\"highlight highlight-ruby\"><pre><span class=\"kp\">nil</span>\n</pre></div>"),
-                   read(markdown_preview.preview_file),
-                   'Decorated code should be in preview file'
-    end
-  else
-    def test_no_syntax_highlighting
-      write(@source_file_path, "```ruby\nnil\n```")
-      markdown_preview = @ghp.new( @source_file_path )
-      assert_equal markdown_preview.wrap_preview("<pre lang=\"ruby\"><code>nil\n</code></pre>"),
-                   read(markdown_preview.preview_file),
-                   'Undecorated code should be in preview file'
-    end
+  def test_uses_syntax_highlighting
+    write(@source_file_path, "```ruby\nnil\n```")
+    markdown_preview = @ghp.new( @source_file_path )
+
+    assert_equal markdown_preview.wrap_preview("<pre lang=\"ruby\" class=\"highlight highlight-ruby\"><span class=\"kp\">nil</span>\n</pre>"),
+                 read(markdown_preview.preview_file),
+                 'Decorated code should be in preview file'
   end
 
   def test_update_preview

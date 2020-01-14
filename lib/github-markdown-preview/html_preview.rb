@@ -1,6 +1,5 @@
 require 'listen'
-require 'github/markdown.rb'
-# ^ '.rb' is intentional due to a rubygems bug, see github issue #35
+require 'commonmarker'
 require 'html/pipeline'
 
 module GithubMarkdownPreview
@@ -11,14 +10,6 @@ module GithubMarkdownPreview
   # For a given file /path/to/file.md, generates /path/to/file.md.html
   class HtmlPreview
     attr_reader :source_file, :preview_file
-
-    begin
-      gem 'github-linguist', '=3.3.1'
-      require 'linguist'
-      SYNTAX_HIGHLIGHTS = true
-    rescue LoadError => _
-      SYNTAX_HIGHLIGHTS = false
-    end
 
     def initialize(source_file, options = {})
       unless File.exist?(source_file)
@@ -72,12 +63,9 @@ module GithubMarkdownPreview
           HTML::Pipeline::ImageMaxWidthFilter,
           HTML::Pipeline::HttpsFilter,
           HTML::Pipeline::EmojiFilter,
-          GithubMarkdownPreview::Pipeline::TaskListFilter
+          GithubMarkdownPreview::Pipeline::TaskListFilter,
+          HTML::Pipeline::SyntaxHighlightFilter
       ]
-
-      if HtmlPreview::SYNTAX_HIGHLIGHTS
-        filters << HTML::Pipeline::SyntaxHighlightFilter
-      end
 
       if options[:comment_mode]
         filters << HTML::Pipeline::MentionFilter

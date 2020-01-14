@@ -33,18 +33,6 @@ Use the `-c` switch to generate a preview of how Github renders comments/issues,
 $ github-markdown-preview -c <path/to/comment/draft.md> # writes <path/to/comment/draft.md.html>
 ```
 
-### Enable syntax highlighting for code blocks
-To enable syntax highlighting for code blocks, you will need to install [`github-linguist`](https://github.com/github/linguist):
-
-```bash
-gem install github-linguist -v 3.3.1 # 3.3.1 is required
-gem install rugged -v 0.23.0 # undeclared dependency of linguist
-```
-
-Note that this install will fail unless your system meets the requirements needed to build its native extensions:
-* You will to either `brew install icu4c` or `apt-get install libicu-dev`
-* On Mac, you will need to have XCode installed (seems like a full install is required, not just the Command Line Tools)
-
 ## Code
 Here's a sample file demonstrating how to call `github-markdown-preview` from your own code:
 ```ruby
@@ -88,16 +76,11 @@ $ bundle install
 $ rake test
 ```
 
-Alternatively, to test with optional dependencies
-```bash
-$ BUNDLE_GEMFILE=Gemfile.optional bundle install
-$ BUNDLE_GEMFILE=Gemfile.optional rake test
-```
-
 To run your development copy of the main script without installing it
 ```bash
 $ bundle exec bin/github-markdown-preview
 ```
+
 To install the your development copy to your system
 ```bash
 $ rake install
